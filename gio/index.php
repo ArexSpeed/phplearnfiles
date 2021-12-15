@@ -1,5 +1,4 @@
 <?php
- 
 // # Variables
  
 //normal variables
@@ -186,4 +185,110 @@ $arr3 = ['a' => 1, 'b' => null];
 var_dump(array_key_exists('a', $arr3)); //true
 var_dump(isset($arr3['b'])); // false
 
+// # OPERATORS
+// * https://www.php.net/manual/en/language.operators.php
+
+// Aritmetic (+ - * / % **)
+
+// Assignment (= += -= *= /= %= **=)
+
+// String (. .=)
+
+// Comparision (== === != !== <> < > >= <= <==> ?? ?:)
+
+// Error Control (@)
+
+// Inc/Dec (++, --)
+
+// Logical (&& || ! and or xor)
+
+// Bitwise (& | ^ ~ << >>)
+
+// Array (+ == === !== != <>)
+
+// Execution (``)
+
+// Type (instanceof)
+
+//Nullable PHP8 (?)
+
+//# Operator Precedence & Associativity
+$p = 5 + 3 * 5;
+// https://www.php.net/manual/en/language.operators.precedence.php
+
+//# Control structures (if/ else / elseif / else if)
+// https://www.php.net/manual/en/language.control-structures.php
+// elseif use in html tag instead else if
+
+//# LOOPS
+
+// while, do-while, for, foreach
+foreach ($programmingLanguages as $language) {
+  echo $language . '<br />';
+}
+
+$programmingLanguages = ['php', 'java', 'c', 'go', 'rust'];
+foreach ($programmingLanguages as $key => &$language) {
+  echo $key . ": " . $language . '<br />'; //1: php ...
+}
+$language = 'php'; // this can oversave last index of array
+print_r($programmingLanguages);
+
+// Swicth, Match expression
+
+$paymentStatus = 1;
+// $paymentStatus = '1'; -> switch convert to int, match no
+
+
+switch ($paymentStatus) {
+  case 1:
+    echo 'Paid';
+    break;
+  case 2:
+  case 3:
+    echo 'Paid Declined';
+    break;
+  case 0: 
+    echo 'Pending Paid';
+    break;
+  default:
+   echo 'Unknown Payment';
+}
+
+// $paymentDisplay = match($paymentStatus) {
+//   1 => 'Paid',
+//   2,3 => 'Payment Declined',
+//   0 => 'Pending payment',
+//   default => 'Unknown Payment'
+// }
+
+//echo $paymentDisplay;
+
+// # Returns / Declare / goto
+
+// declare - ticks
+function onTick() {
+  echo 'Tick <br />';
+}
+
+register_tick_function('onTick');
+declare(ticks=3);
+$i = 0;
+$length = 10;
+while ($i < $length) {
+  echo $i++ . '<br />'; 
+}
+//-> this print Tick 0 1 2 Tick 3 4 5 Tick ...
+
+// declare - encoding
+
+
+// declare - strict_types
+// declare(strict_types=1); // have to add in all file where below function will be use. And has to be at very first place in file
+
+function sum2(int $x, int $y) {
+  return $x + $y;
+}
+
+echo sum2('5', 10); // in strick mode both should be int, this is error
 ?>
