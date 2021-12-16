@@ -30,6 +30,11 @@ $$foo = 'bazz';
 echo $foo, $$foo; //-> barbazz
 echo "$foo, $$foo"; //-> bar, $bar
 echo "$foo, ${$foo}"; //-> barbazz
+
+// check php version
+foreach (get_loaded_extensions() as $i => $next) {
+  echo $ext . ' => ' . phpversion($ext) . '<br />';
+}
  
 // # Data Types & Type Casting
 /*
@@ -291,4 +296,106 @@ function sum2(int $x, int $y) {
 }
 
 echo sum2('5', 10); // in strick mode both should be int, this is error
+
+// # FUNCTIONS
+function foo() {
+  echo 'Hellow World';
+}
+
+foo();
+
+var_dump(foo2()); //is working even before declaration
+function foo2() {
+  return 'Hellow World';
+}
+
+// Type function
+function foo3(): ?int {
+  return 1;
+}
+echo '<br />';
+
+// Type declaration
+// https://www.php.net/manual/en/language.types.declarations.php
+
+function fuu(int|float $x, int|float $y = 10): int|float {
+  return $x * $y;
+}
+
+fuu(5.00);
+
+function summore(...$numbers): int {
+  $sum = 0;
+
+  foreach($numbers as $number) {
+    $sum += $number;
+  }
+
+  return $sum;
+}
+
+summore(10,14,124,23,11);
+
+//Same result
+function summore2(int $x, int $y, ...$numbers): int {
+  return $x + $y + array_sum($numbers);
+}
+
+$sa = 10;
+$sb = 12;
+$snumbers = [10,11,12,13,14];
+
+echo summore($sa, $sb, ...$snumbers);
+
+// # Variables Scopes
+
+$vx = 5;
+
+function glob() {
+  $GLOBALS['vx'] = 10;
+  echo $GLOBALS['vx'];
+}
+
+glob();
+echo $x; // print 2 times 10 cause global vx change normal vx
+
+// variable function
+// https://www.php.net/manual/en/functions.variable-functions.php
+function var(int ...$numbers): int {
+  return array_sum($numbers);
+}
+
+$xvar = 'var';
+
+if(is_callable($xvar)) {
+  echo $xvar(1,2,3,4); // is callub function var
+} else {
+  echo 'Not callable'
+}
+
+// anonymus
+$vax = 10;
+$vsum = function (int ...$numbers) use ($vax) : int {
+  echo $vax; // not available without use ($vax)
+  $vax = 15; // change and read only in localscope, global ouside the function is still $vax = 10;, change global with use (&$vax)
+  return array_sum($numbers);
+}
+echo $vsum(1,2,3,4);
+
+//array
+$varray = [1,2,3,4];
+$varray2 = array_map(function($element) {
+  return $element * 2;
+}, $varray);
+
+// or
+function infoo($element) {
+  return $element * 2;
+}
+$array3 = array_map('infoo', $varray);
+
+// or
+$vy = 5;
+$varray4 = array_map(fn($number) => $number * $number * $vy, $varray);
+
 ?>
