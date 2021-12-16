@@ -361,7 +361,7 @@ echo $x; // print 2 times 10 cause global vx change normal vx
 
 // variable function
 // https://www.php.net/manual/en/functions.variable-functions.php
-function var(int ...$numbers): int {
+function fvar(int ...$numbers): int {
   return array_sum($numbers);
 }
 
@@ -370,7 +370,7 @@ $xvar = 'var';
 if(is_callable($xvar)) {
   echo $xvar(1,2,3,4); // is callub function var
 } else {
-  echo 'Not callable'
+  echo 'Not callable';
 }
 
 // anonymus
@@ -397,5 +397,80 @@ $array3 = array_map('infoo', $varray);
 // or
 $vy = 5;
 $varray4 = array_map(fn($number) => $number * $number * $vy, $varray);
+
+//# Data & Time
+// https://www.php.net/manual/en/datetime.formats.date.php
+echo time(); //time in seconds
+echo date('d/m/Y g:ia'); // local time
+
+date_default_timezone_set('UTC'); // change timezone
+date_default_timezone_get(); // get current timezone
+
+$date = date('d/m/Y g:ia', strtotime('second friday of January'));
+echo '<pre>';
+print_r(date_parse($date)); // parse and show more info about time
+echo '</pre>';
+
+//Arrays
+// https://www.php.net/manual/en/ref.array.php
+$array = [1,2,3,4,5,6,7,8,9,10];
+$even = array_filter($array, fn($number) => $number % 2 === 0);
+
+// merge
+$array1 = [1,2,3];
+$array2 = [1,2,3];
+$array3 = [1,2,3];
+
+$merged = array_merge($array1, $array2, $array3);
+
+//reduced
+$invoice = [
+  ['price' => 9.99, 'qty' => 3, 'desc' => 'Item 1'],
+  ['price' => 19.99, 'qty' => 2, 'desc' => 'Item 2'],
+  ['price' => 15.99, 'qty' => 4, 'desc' => 'Item 3'],
+];
+
+$total = array_reduce(
+  $invoice,
+  fn($sum, $item) => $sum + $item['qty'] * $item['price'],
+  100 //initial value, default is 0
+);
+
+//serach
+$array = ['a', 'b', 'c', 'd'];
+
+$key = array_search('b', $array);
+
+//diff
+prettyPrintArray(array_diff($array1, $array2, $array3));
+
+//sort
+$array = ['d' => 3, 'b' => 1, 'c' => 4, 'a' => 2];
+
+asort($array); //sort from 1-4
+ksort($array); //sort a-d by key
+usort($array, fn($a, $b) => $a <=> $b); //sort 1-4 but key change to [0] => 1
+
+//destructure
+$array = [1,2,3,4];
+[$a, $b, $c, $d] => $array; // change into value, 1,2,3,4
+
+//# CONFIGURATION
+// Xampp Control Panel -> Config [php.ini]
+// https://www.php.net/manual/en/ini.list.php
+
+//Error handling
+function errorHandler(
+  int $type,
+  string $msg,
+  ?string $file = null,
+  ?int $line = null
+) {
+  echo $type . ' ' . $msg . ' ' . $file . ' ' . $line;
+  exit;
+}
+error_reporting(E_ALL & ~E_WARNING); // report all except warning
+
+set_error_handler('errorHandler', E_ALL);
 
 ?>
