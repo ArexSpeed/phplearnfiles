@@ -1,5 +1,9 @@
 <?php
+
+  require 'config.inc.php';
+
   $name = '';
+  $password = '';
   $gender = '';
   $color = '';
 
@@ -10,6 +14,11 @@
       $ok = false;
     } else {
       $name = trim($_POST['name']);
+    }
+    if (!isset($_POST['password']) || $_POST['password'] === '') {
+      $ok = false;
+    } else {
+      $password = $_POST['password'];
     }
     if (!isset($_POST['gender']) || $_POST['gender'] === '') {
       $ok = false;
@@ -22,17 +31,20 @@
       $color = $_POST['color'];
     }
     if ($ok) {
+      $hash = password_hash($password, PASSWORD_DEFAULT);
+
       $db = new mysqli(
-        'localhost',
-        'root',
-        '',
-        'plural'
+        MYSQL_HOST,
+        MYSQL_USER,
+        MYSQL_PASSWORD,
+        MYSQL_DATABASE
       );
       $sql = sprintf(
-        "INSERT INTO users(name, gender, color) VALUES ('%s','%s','%s')",
+        "INSERT INTO users(name, gender, color, hash) VALUES ('%s','%s','%s', '%s')",
         $db->real_escape_string($name),
         $db->real_escape_string($gender),
-        $db->real_escape_string($color)
+        $db->real_escape_string($color),
+        $db->real_escape_string($hash)
       );
       $db->query($sql);
       echo '<p>User added.</p>';
@@ -40,6 +52,7 @@
     }
   }
 
+  readfile('header.tmpl.html');
 ?>
 
 <!DOCTYPE html>
@@ -65,6 +78,7 @@
       ?>
       "
     ><br>
+  Password: <input type="password" name="password"><br>
   Gender: 
     <input type="radio" name="gender" value="f"<?php
     if ($gender === 'f') {
@@ -104,5 +118,6 @@
   <input type="submit" name="submit" value="Register">
   </form>
 
-</body>
-</html>
+<?php
+  readfile('footer.tmpl.html');
+?>
