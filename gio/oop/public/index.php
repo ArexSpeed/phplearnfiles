@@ -25,3 +25,9 @@ $transaction2 = (new Transaction(100, 'Transaction 1'))
   ->applyDiscount(10);
 
 var_dump($transaction1->getAmount, $transaction2->getAmount());
+
+//get from constats (2nd class);
+echo Transaction::STATUS_PAID;
+
+//db get
+$db = DB::getInstance([]);
