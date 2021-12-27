@@ -4,6 +4,8 @@ function followandrew_theme_support(){
   //Add dynamic title
   add_theme_support('title-tag');
   //title get from custom name sets in wp theme dashboard
+  add_theme_support('custom-logo');
+  add_theme_support('post-thumbnails');
 }
 
 add_action('after_theme_setup', 'followandrew_theme_support');
