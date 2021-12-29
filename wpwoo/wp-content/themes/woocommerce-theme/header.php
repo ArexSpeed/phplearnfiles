@@ -10,4 +10,19 @@
 </head>
 <body <?php body_class(); ?>> 
 <!-- body_class - allow add classes to body by plugins -->
+
+  <header>
+    <div class="container d-flex align-items-center justify-content-between">
+      <img src="<?php bloginfo('template_directory'); ?>/images/logo.png" class="img-fluid logo" />
+
+      <?php
+        wp_nav_menu(
+          array(
+            'theme_location' => 'top-menu',
+            'menu_class' => 'top-menu'
+          )
+        )
+      ?>
+    </div>
+  </header>
   
