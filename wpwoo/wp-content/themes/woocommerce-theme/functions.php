@@ -25,4 +25,15 @@ register_nav_menus(
     'top-menu' => 'Top Menu'
   )
   );
-add_image_size('post_image', 1100, 750, true);
+add_image_size('post_image', 1100, 550, false);
+
+//Add widget
+register_sidebar(
+  array(
+    'name' => 'Page Sidebar',
+    'id' => 'page-sidebar',
+    'class' => '',
+    'before_title' => '<h4>',
+    'after_title' => '</h4>'
+  )
+);
