@@ -37,3 +37,13 @@ register_sidebar(
     'after_title' => '</h4>'
   )
 );
+
+register_sidebar(
+  array(
+    'name' => 'Blog Sidebar',
+    'id' => 'blog-sidebar',
+    'class' => '',
+    'before_title' => '<h4>',
+    'after_title' => '</h4>'
+  )
+);
